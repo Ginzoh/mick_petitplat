@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Lato&display=swap"
+      rel="stylesheet"
+    />
+    <title>Les petits plats</title>
+  </head>
+  <body>
+    <header>
+      <img class="logo" src="assets/logo.png" alt="Logo de les petits plats" />
+      <h1>Les petits plats</h1>
+    </header>
+    <main>
+      <article>
+        <div class="searchBar">
+          <input type="text" placeholder="Rechercher une recette" />
+          <img class="search" src="assets/search.png" alt="search icon" />
+        </div>
+        <nav>
+          <div class="select-wrapper">
+            <div class="select">
+              <div class="select__trigger" id="ingredients">
+                <span>Ingredients</span>
+                <div class="arrow"></div>
+              </div>
+              <div class="custom-options">
+                <span class="custom-option" data-value="Ing1">Ing1</span>
+                <span class="custom-option" data-value="Ing2">Ing2</span>
+                <span class="custom-option" data-value="Ing3">Ing3</span>
+              </div>
+            </div>
+          </div>
+          <div class="select-wrapper">
+            <div class="select">
+              <div class="select__trigger appareils">
+                <span>Appareils</span>
+                <div class="arrow"></div>
+              </div>
+              <div class="custom-options appareils">
+                <span class="custom-option" data-value="Ing1">Ing1</span>
+                <span class="custom-option" data-value="Ing2">Ing2</span>
+                <span class="custom-option" data-value="Ing3">Ing3</span>
+              </div>
+            </div>
+          </div>
+          <div class="select-wrapper">
+            <div class="select">
+              <div class="select__trigger ustensiles">
+                <span>Ustensiles</span>
+                <div class="arrow"></div>
+              </div>
+              <div class="custom-options ustensiles">
+                <span class="custom-option" data-value="Ing1">Ing1</span>
+                <span class="custom-option" data-value="Ing2">Ing2</span>
+                <span class="custom-option" data-value="Ing3">Ing3</span>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <section class="mes-recettes">
+          <div class="ma-recette">
+            <img class="recette-pic" alt="" />
+            <div class="en-tete">
+              <h2>Limonade de Coco</h2>
+              <div class="time">
+                <span class="icon"></span>
+                <p>10 min</p>
+              </div>
+            </div>
+            <div class="instruction">
+              <div class="ingredients">
+                <p>Lait de coco: 400ml</p>
+                <p>Lait de coco: 400ml</p>
+                <p>Lait de coco: 400ml</p>
+                <p>Lait de coco: 400ml</p>
+                <p>Lait de coco: 400ml</p>
+                <p>Lait de coco: 400ml</p>
+                <p>Lait de coco: 400ml</p>
+              </div>
+              <p class="follow">
+                Mettre les glaçons à votre goût dans le blender, ajouter le
+                lait, la crème de coco, le jus de 2 citrons et le sucre. Mixer
+                jusqu'à avoir la consistence désirée.
+              </p>
+            </div>
+          </div>
+          <div class="ma-recette">
+            <img class="recette-pic" alt="" />
+            <div class="en-tete">
+              <h2>Limonade de Coco</h2>
+              <div class="time">
+                <span class="icon"></span>
+                <p>10 min</p>
+              </div>
+            </div>
+            <div class="instruction">
+              <div class="ingredients">
+                <p>Lait de coco: 400ml</p>
+                <p>Lait de coco: 400ml</p>
+                <p>Lait de coco: 400ml</p>
+                <p>Lait de coco: 400ml</p>
+                <p>Lait de coco: 400ml</p>
+                <p>Lait de coco: 400ml</p>
+                <p>Lait de coco: 400ml</p>
+              </div>
+              <p class="follow">
+                Mettre les glaçons à votre goût dans le blender, ajouter le
+                lait, la crème de coco, le jus de 2 citrons et le sucre. Mixer
+                jusqu'à avoir la consistence désirée.
+              </p>
+            </div>
+          </div>
+        </section>
+      </article>
+    </main>
+    <script src="scripts/factories/plats.js"></script>
+    <script src="scripts/page/index.js"></script>
+  </body>
+</html>
