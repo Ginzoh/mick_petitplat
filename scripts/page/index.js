@@ -30,8 +30,22 @@ window.addEventListener("click", function (e) {
     }
   }
 });
+
+async function displayData(recettes) {
+  const recettesSection = document.querySelector(".mes-recettes");
+
+  recettes.forEach((recette) => {
+    const recetteModel = recetteFactory(recette);
+    // const userCardDOM = recetteModel.getRecetteDOM();
+    // recettesSection.appendChild(userCardDOM);
+  });
+}
+
 async function init() {
+  console.log(recipes);
+  // document.querySelector(".mes-recettes").innerHTML = "";
   my_select();
+  displayData(recipes);
 }
 
 init();

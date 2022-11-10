@@ -236,3 +236,7 @@ nav {
   line-height: 14.4px;
   padding-bottom: 19px;
 }
+
+.ingredient {
+  font-weight: 600;
+}
