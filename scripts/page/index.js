@@ -36,8 +36,8 @@ async function displayData(recettes) {
 
   recettes.forEach((recette) => {
     const recetteModel = recetteFactory(recette);
-    // const userCardDOM = recetteModel.getRecetteDOM();
-    // recettesSection.appendChild(userCardDOM);
+    const userCardDOM = recetteModel.getRecetteDOM();
+    recettesSection.appendChild(userCardDOM);
   });
 }
 
