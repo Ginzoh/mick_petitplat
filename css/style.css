@@ -54,6 +54,11 @@ article .search {
   right: 1.1%;
   top: 24.5%;
 }
+
+.search:hover {
+  cursor: pointer;
+}
+
 nav {
   display: flex;
   gap: 20px;

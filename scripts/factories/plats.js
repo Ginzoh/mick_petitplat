@@ -83,7 +83,6 @@ function recetteFactory(data) {
       `${description.slice(0, 200)}...`
     );
     recetteNode_17.appendChild(recetteNode_18);
-    // howToMake.innerText = `${description.slice(0, 200)}...`;
     return recetteNode_1;
   }
   return {

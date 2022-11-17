@@ -1,3 +1,30 @@
+function searchPlat() {
+  console.log("GG");
+  const platInput = document.getElementById("searchInput");
+  console.log(platInput.value);
+  const result = trierPlats(platInput.value.toUpperCase());
+  document.querySelector(".mes-recettes").innerHTML = "";
+  displayData(result);
+  console.log("wtf");
+}
+function trierPlats(plat) {
+  return recipes.filter(function (a) {
+    return (
+      a.description.toUpperCase().search(plat) !== -1 ||
+      a.name.toUpperCase().search(plat) !== -1 ||
+      testIng(a.ingredients, plat)
+    );
+  });
+}
+function testIng(ingredients, plat) {
+  ingredients.forEach((food) => {
+    if (food.ingredient.toUpperCase().search(plat) !== -1) {
+      return 1;
+    } else {
+      return -1;
+    }
+  });
+}
 function my_select() {
   for (const dropdown of document.querySelectorAll(".select-wrapper")) {
     dropdown.addEventListener("click", function () {
@@ -8,18 +35,8 @@ function my_select() {
   }
   for (const option of document.querySelectorAll(".custom-option")) {
     option.addEventListener("click", function () {
-      // this.parentNode
-      //   .querySelector(".custom-option.selected")
-      //   .classList.remove("selected");
-      // this.classList.add("selected");
-      // this.closest(".select").querySelector(
-      //   ".select__trigger span"
-      // ).textContent = this.textContent;
       let triValue = this.dataset.value;
       console.log(triValue);
-      //const triMedias = call_tri(triValue, medias);
-      //document.getElementById("photos").innerHTML = "";
-      //affichePhotos(triMedias);
     });
   }
 }
@@ -46,6 +63,7 @@ async function init() {
   // document.querySelector(".mes-recettes").innerHTML = "";
   my_select();
   displayData(recipes);
+  document.querySelector(".search").addEventListener("click", searchPlat);
 }
 
 init();
