@@ -1,10 +1,18 @@
 function searchPlat() {
   const platInput = document.getElementById("searchInput");
   console.log(platInput.value);
+  if (platInput.value.length < 3) {
+    if (document.getElementById("mes-recettes").children.length < 50) {
+      document.querySelector(".mes-recettes").innerHTML = "";
+      displayData(recipes);
+    }
+    return;
+  }
   const result = trierPlats(platInput.value.toUpperCase());
   document.querySelector(".mes-recettes").innerHTML = "";
   displayData(result);
 }
+
 function trierPlats(plat) {
   return recipes.filter(function (a) {
     return (
@@ -76,6 +84,7 @@ async function init() {
   displayData(recipes);
   my_select();
   document.querySelector(".search").addEventListener("click", searchPlat);
+  document.getElementById("searchInput").addEventListener("input", searchPlat);
 }
 
 init();
