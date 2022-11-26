@@ -83,6 +83,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border: none;
   padding: 0 22px;
   font-size: 18px;
   font-family: "Lato";
@@ -97,7 +98,6 @@ nav {
 
 .custom-options {
   position: absolute;
-  display: block;
   color: #fff;
   top: 100%;
   left: 0;
@@ -126,10 +126,9 @@ nav {
 .custom-option {
   position: relative;
   display: block;
-  padding: 0 22px 0 22px;
-  font-size: 22px;
-  font-weight: 300;
-  line-height: 60px;
+  padding: 10px 22px;
+  font-size: 18px;
+  font-weight: 400;
   cursor: pointer;
   transition: all 0.5s;
 }
@@ -245,4 +244,34 @@ nav {
 
 .ingredient {
   font-weight: 600;
+}
+
+ol {
+  /* As width is 10 so it
+  will create 3 columns */
+  width: 41.6em;
+
+  /* Removes any style
+     in list */
+  list-style: none;
+  color: white;
+  position: absolute;
+}
+
+ol li {
+  /* Makes the list to
+     float left */
+  float: left;
+
+  /* Size of one list item */
+  width: 12.3em;
+}
+
+.select input {
+  background-color: #3282f7;
+  color: #fff;
+  display: none;
+}
+.select input::placeholder {
+  color: #fff;
 }

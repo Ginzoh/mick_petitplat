@@ -3,6 +3,9 @@ function setAttributes(el, attrs) {
     el.setAttribute(key, attrs[key]);
   }
 }
+let ingredientsArray = [];
+let applianceArray = [];
+let ustensilsArray = [];
 
 function recetteFactory(data) {
   const {
@@ -85,6 +88,48 @@ function recetteFactory(data) {
     recetteNode_17.appendChild(recetteNode_18);
     return recetteNode_1;
   }
+
+  function getIngredient() {
+    let ingredient_1;
+    ingredients.forEach((food) => {
+      if (ingredientsArray.indexOf(food.ingredient.toUpperCase()) === -1) {
+        ingredientsArray.push(food.ingredient.toUpperCase());
+        ingredient_1 = document.createElement("LI");
+        ingredient_1.setAttribute("class", "custom-option");
+        ingredient_1.setAttribute("data-value", food.ingredient.toUpperCase());
+
+        let ingredient_2 = document.createTextNode(food.ingredient);
+        ingredient_1.appendChild(ingredient_2);
+      }
+    });
+    return ingredient_1;
+  }
+  function getAppliance() {
+    if (applianceArray.indexOf(appliance.toUpperCase()) === -1) {
+      applianceArray.push(appliance.toUpperCase());
+      let appareil_1 = document.createElement("LI");
+      appareil_1.setAttribute("class", "custom-option");
+      appareil_1.setAttribute("data-value", appliance.toUpperCase());
+
+      let appareil_2 = document.createTextNode(appliance);
+      appareil_1.appendChild(appareil_2);
+      return appareil_1;
+    }
+  }
+  function getUstansiles(mesUstensiles) {
+    ustensils.forEach((ust) => {
+      if (ustensilsArray.indexOf(ust.toUpperCase()) === -1) {
+        ustensilsArray.push(ust.toUpperCase());
+        let ustensil_1 = document.createElement("LI");
+        ustensil_1.setAttribute("class", "custom-option");
+        ustensil_1.setAttribute("data-value", ust.toUpperCase());
+
+        let ustensil_2 = document.createTextNode(ust);
+        ustensil_1.appendChild(ustensil_2);
+        mesUstensiles.appendChild(ustensil_1);
+      }
+    });
+  }
   return {
     id,
     name,
@@ -95,5 +140,9 @@ function recetteFactory(data) {
     appliance,
     ustensils,
     getRecetteDOM,
+    getIngredient,
+    getAppliance,
+    applianceArray,
+    getUstansiles,
   };
 }
