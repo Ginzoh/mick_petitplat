@@ -14,18 +14,22 @@ function searchPlat() {
 }
 
 function trierPlats(plat) {
-  return recipes.filter(function (a) {
-    return (
-      a.description.toUpperCase().search(plat) !== -1 ||
-      a.name.toUpperCase().search(plat) !== -1 ||
-      testIng(a.ingredients, plat)
-    );
-  });
+  let plats = [];
+  for (const el of recipes) {
+    if (
+      el.description.toUpperCase().search(plat) !== -1 ||
+      el.name.toUpperCase().search(plat) !== -1 ||
+      testIng(el.ingredients, plat)
+    ) {
+      plats.push(el);
+    }
+  }
+  return plats;
 }
 function testIng(ingredients, plat) {
-  ingredients.forEach((food) => {
+  for (const food of ingredients) {
     return food.ingredient.toUpperCase().search(plat) !== -1;
-  });
+  }
 }
 function my_select() {
   for (const dropdown of document.querySelectorAll(".select-wrapper")) {
