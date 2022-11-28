@@ -24,8 +24,9 @@ function trierPlats(plat) {
 }
 function testIng(ingredients, plat) {
   ingredients.forEach((food) => {
-    return food.ingredient.toUpperCase().search(plat) !== -1;
+    if (food.ingredient.toUpperCase().search(plat) !== -1) return true;
   });
+  return false;
 }
 function my_select() {
   for (const dropdown of document.querySelectorAll(".select-wrapper")) {
