@@ -1,16 +1,25 @@
 function searchPlat() {
   const platInput = document.getElementById("searchInput");
+  const mesRec = document.querySelector(".mes-recettes");
   console.log(platInput.value);
   if (platInput.value.length < 3) {
-    if (document.getElementById("mes-recettes").children.length < 50) {
-      document.querySelector(".mes-recettes").innerHTML = "";
+    if (mesRec.children.length < 50) {
+      mesRec.innerHTML = "";
       displayData(recipes);
     }
     return;
   }
   const result = trierPlats(platInput.value.toUpperCase());
-  document.querySelector(".mes-recettes").innerHTML = "";
+  mesRec.innerHTML = "";
   displayData(result);
+  if (mesRec.innerHTML === "") {
+    let message_1 = document.createElement("P");
+    message_1.setAttribute("id", "notfound");
+
+    let message_2 = document.createTextNode("Aucune recette trouvée");
+    message_1.appendChild(message_2);
+    mesRec.appendChild(message_1);
+  }
 }
 
 function trierPlats(plat) {
@@ -43,11 +52,16 @@ function my_select() {
   }
   for (const button of document.querySelectorAll(".select button")) {
     button.addEventListener("click", function () {
-      console.log("test");
       this.style.display = "none";
       const myInput = document.querySelector(".select input");
       myInput.style.display = "block";
+      document.getElementById("ingredientsWrap").style.width = "667px";
       myInput.focus();
+      myInput.addEventListener("focusout", function () {
+        this.style.display = "none";
+        button.style.display = "block";
+        document.getElementById("ingredientsWrap").style.width = "170px";
+      });
     });
   }
 }
