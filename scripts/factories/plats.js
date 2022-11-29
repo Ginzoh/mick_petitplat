@@ -3,9 +3,6 @@ function setAttributes(el, attrs) {
     el.setAttribute(key, attrs[key]);
   }
 }
-let ingredientsArray = [];
-let applianceArray = [];
-let ustensilsArray = [];
 
 function recetteFactory(data) {
   const {
@@ -89,7 +86,7 @@ function recetteFactory(data) {
     return recetteNode_1;
   }
 
-  function getIngredient() {
+  function getIngredient(ingredientsArray) {
     let ingredient_1;
     ingredients.forEach((food) => {
       if (ingredientsArray.indexOf(food.ingredient.toUpperCase()) === -1) {
@@ -104,7 +101,7 @@ function recetteFactory(data) {
     });
     return ingredient_1;
   }
-  function getAppliance() {
+  function getAppliance(applianceArray) {
     if (applianceArray.indexOf(appliance.toUpperCase()) === -1) {
       applianceArray.push(appliance.toUpperCase());
       let appareil_1 = document.createElement("LI");
@@ -116,7 +113,7 @@ function recetteFactory(data) {
       return appareil_1;
     }
   }
-  function getUstansiles(mesUstensiles) {
+  function getUstansiles(mesUstensiles, ustensilsArray) {
     ustensils.forEach((ust) => {
       if (ustensilsArray.indexOf(ust.toUpperCase()) === -1) {
         ustensilsArray.push(ust.toUpperCase());
@@ -142,7 +139,6 @@ function recetteFactory(data) {
     getRecetteDOM,
     getIngredient,
     getAppliance,
-    applianceArray,
     getUstansiles,
   };
 }

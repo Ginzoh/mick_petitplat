@@ -11,6 +11,9 @@ function searchPlat() {
   }
   const result = trierPlats(platInput.value.toUpperCase());
   mesRec.innerHTML = "";
+  document.getElementById("ingredients-list").innerHTML = "";
+  document.getElementById("appareils").innerHTML = "";
+  document.getElementById("ustensiles").innerHTML = "";
   displayData(result);
   if (mesRec.innerHTML === "") {
     let message_1 = document.createElement("P");
@@ -74,6 +77,9 @@ window.addEventListener("click", function (e) {
 });
 
 async function displayData(recettes) {
+  let ingredientsArray = [];
+  let applianceArray = [];
+  let ustensilsArray = [];
   const recettesSection = document.querySelector(".mes-recettes");
   const mesIngredients = document.getElementById("ingredients-list");
   const mesAppareils = document.getElementById("appareils");
@@ -81,9 +87,9 @@ async function displayData(recettes) {
   recettes.forEach((recette) => {
     const recetteModel = recetteFactory(recette);
     const recettes = recetteModel.getRecetteDOM();
-    const ingredients = recetteModel.getIngredient();
-    const appareil = recetteModel.getAppliance();
-    recetteModel.getUstansiles(mesUstensiles);
+    const ingredients = recetteModel.getIngredient(ingredientsArray);
+    const appareil = recetteModel.getAppliance(applianceArray);
+    recetteModel.getUstansiles(mesUstensiles, ustensilsArray);
     recettesSection.appendChild(recettes);
     if (ingredients !== undefined) {
       mesIngredients.appendChild(ingredients);
