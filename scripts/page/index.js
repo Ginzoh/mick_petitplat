@@ -87,16 +87,10 @@ async function displayData(recettes) {
   recettes.forEach((recette) => {
     const recetteModel = recetteFactory(recette);
     const recettes = recetteModel.getRecetteDOM();
-    const ingredients = recetteModel.getIngredient(ingredientsArray);
-    const appareil = recetteModel.getAppliance(applianceArray);
-    recetteModel.getUstansiles(mesUstensiles, ustensilsArray);
+    recetteModel.getIngredient(ingredientsArray, mesIngredients);
+    recetteModel.getAppliance(applianceArray, mesAppareils);
+    recetteModel.getUstansiles(ustensilsArray, mesUstensiles);
     recettesSection.appendChild(recettes);
-    if (ingredients !== undefined) {
-      mesIngredients.appendChild(ingredients);
-    }
-    if (appareil !== undefined) {
-      mesAppareils.appendChild(appareil);
-    }
   });
 }
 

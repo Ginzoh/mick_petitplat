@@ -155,6 +155,7 @@ nav {
   position: relative;
   height: 15px;
   width: 15px;
+  display: inline-block;
 }
 
 .arrow::before,
@@ -295,4 +296,9 @@ ol li {
 
 #notfound {
   margin-top: 100px;
+}
+
+button span {
+  display: inline-block;
+  margin-right: 17px;
 }

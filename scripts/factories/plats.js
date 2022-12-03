@@ -86,34 +86,43 @@ function recetteFactory(data) {
     return recetteNode_1;
   }
 
-  function getIngredient(ingredientsArray) {
+  function getIngredient(ingredientsArray, mesIngredients) {
     let ingredient_1;
-    ingredients.forEach((food) => {
-      if (ingredientsArray.indexOf(food.ingredient.toUpperCase()) === -1) {
-        ingredientsArray.push(food.ingredient.toUpperCase());
-        ingredient_1 = document.createElement("LI");
-        ingredient_1.setAttribute("class", "custom-option");
-        ingredient_1.setAttribute("data-value", food.ingredient.toUpperCase());
+    if (ingredients !== undefined) {
+      ingredients.forEach((food) => {
+        if (ingredientsArray.indexOf(food.ingredient.toUpperCase()) === -1) {
+          ingredientsArray.push(food.ingredient.toUpperCase());
+          ingredient_1 = document.createElement("LI");
+          ingredient_1.setAttribute("class", "custom-option");
+          ingredient_1.setAttribute(
+            "data-value",
+            food.ingredient.toUpperCase()
+          );
 
-        let ingredient_2 = document.createTextNode(food.ingredient);
-        ingredient_1.appendChild(ingredient_2);
-      }
-    });
+          let ingredient_2 = document.createTextNode(food.ingredient);
+          ingredient_1.appendChild(ingredient_2);
+          mesIngredients.appendChild(ingredient_1);
+        }
+      });
+    }
+
     return ingredient_1;
   }
-  function getAppliance(applianceArray) {
-    if (applianceArray.indexOf(appliance.toUpperCase()) === -1) {
-      applianceArray.push(appliance.toUpperCase());
-      let appareil_1 = document.createElement("LI");
-      appareil_1.setAttribute("class", "custom-option");
-      appareil_1.setAttribute("data-value", appliance.toUpperCase());
+  function getAppliance(applianceArray, mesAppareils) {
+    if (appliance !== undefined) {
+      if (applianceArray.indexOf(appliance.toUpperCase()) === -1) {
+        applianceArray.push(appliance.toUpperCase());
+        let appareil_1 = document.createElement("LI");
+        appareil_1.setAttribute("class", "custom-option");
+        appareil_1.setAttribute("data-value", appliance.toUpperCase());
 
-      let appareil_2 = document.createTextNode(appliance);
-      appareil_1.appendChild(appareil_2);
-      return appareil_1;
+        let appareil_2 = document.createTextNode(appliance);
+        appareil_1.appendChild(appareil_2);
+        mesAppareils.appendChild(appareil_1);
+      }
     }
   }
-  function getUstansiles(mesUstensiles, ustensilsArray) {
+  function getUstansiles(ustensilsArray, mesUstensiles) {
     ustensils.forEach((ust) => {
       if (ustensilsArray.indexOf(ust.toUpperCase()) === -1) {
         ustensilsArray.push(ust.toUpperCase());
