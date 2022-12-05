@@ -93,7 +93,7 @@ function recetteFactory(data) {
         if (ingredientsArray.indexOf(food.ingredient.toUpperCase()) === -1) {
           ingredientsArray.push(food.ingredient.toUpperCase());
           ingredient_1 = document.createElement("LI");
-          ingredient_1.setAttribute("class", "custom-option");
+          ingredient_1.setAttribute("class", "custom-option ing");
           ingredient_1.setAttribute(
             "data-value",
             food.ingredient.toUpperCase()
