@@ -1,4 +1,6 @@
 let result = recipes;
+let mytags = [];
+let myIngs;
 function searchPlat(para, tag) {
   const platInput = document.getElementById("searchInput");
   const mesRec = document.querySelector(".mes-recettes");
@@ -17,11 +19,15 @@ function searchPlat(para, tag) {
     console.log("app");
   } else if (para === "ust") {
     console.log("ust");
-  } else if (para.currentTarget.myParam === "full") {
-    result = trierPlats(
-      platInput.value.toUpperCase(),
-      para.currentTarget.myParam
-    );
+  } else if (para === "full" || para.currentTarget.myParam === "full") {
+    if (para == "full") {
+      result = trierPlats(platInput.value.toUpperCase(), para);
+    } else {
+      result = trierPlats(
+        platInput.value.toUpperCase(),
+        para.currentTarget.myParam
+      );
+    }
   } else {
     console.log("There was a mistake in the search tag");
   }
@@ -116,12 +122,9 @@ async function displayData(recettes) {
     recetteModel.getUstansiles(ustensilsArray, mesUstensiles);
     recettesSection.appendChild(recettes);
   });
+  myIngs = document.querySelector(".custom-options").innerHTML;
   for (const option of document.querySelectorAll(".custom-option")) {
     option.addEventListener("click", function () {
-      // let triValue = this.dataset.value;
-
-      // console.log(triValue);
-
       let li = document.createElement("li");
       let inputValue = this.dataset.value;
       let t = document.createTextNode(inputValue);
@@ -130,21 +133,35 @@ async function displayData(recettes) {
         alert("You must write something!");
       } else {
         document.getElementById("tags").appendChild(li);
+        if (mytags.indexOf(inputValue.toUpperCase()) === -1)
+          mytags.push(inputValue.toUpperCase());
       }
-      // document.getElementById("myInput").value = "";
 
       let span = document.createElement("SPAN");
       let txt = document.createTextNode("\u00D7");
-      span.className = "close";
+      span.className = `close`;
       span.appendChild(txt);
       li.appendChild(span);
-      let close = document.getElementsByClassName("close");
-      for (let c of close) {
-        c.onclick = function () {
-          let div = this.parentElement;
-          div.style.display = "none";
-        };
-      }
+      // let close = document.getElementsByClassName("close");
+      // for (let c of close) {
+      span.onclick = function () {
+        const index = mytags.indexOf(inputValue.toUpperCase());
+        console.log("Tell me " + mytags + "my tag" + inputValue.toUpperCase());
+        if (index > -1) {
+          console.log("REMOVE HERE");
+          mytags.splice(index, 1);
+        }
+        let div = this.parentElement;
+        div.style.display = "none";
+        searchPlat(
+          "full",
+          document.querySelector("#searchInput").dataset.value
+        );
+        if (mytags.length !== 0) {
+          mytags.forEach((tag) => searchPlat("ing", tag));
+        }
+      };
+      // }
     });
   }
   for (const ing of document.querySelectorAll(".ing")) {
@@ -155,7 +172,42 @@ async function displayData(recettes) {
     });
     ing.myParam = "ing";
   }
+  const ingInput = document.querySelector(".select input");
+  ingInput.removeEventListener("input", dropdownIng);
+  ingInput.addEventListener("input", dropdownIng);
+  ingInput.myParam = ingredientsArray;
 }
+
+function dropdownIng(ingArray) {
+  const myInputIng = document.querySelector(".select input");
+
+  // myInputIng.removeEventListener("focusout", htmlBack);
+  // myInputIng.addEventListener("focusout", htmlBack);
+  if (this.value.length !== 0) {
+    document.getElementById("ingredients-list").style.opacity = 0;
+    document.getElementById("dropdown").style.opacity = 1;
+    console.log(ingArray.currentTarget.myParam);
+    console.log(myInputIng.value);
+    let newIng = ingArray.currentTarget.myParam.filter((ing) => {
+      console.log("Testing " + myInputIng.value.toUpperCase() + " and " + ing);
+      return ing.search(myInputIng.value.toUpperCase()) !== -1;
+    });
+    console.log(newIng);
+  } else {
+    document.getElementById("ingredients-list").style.opacity = 1;
+    document.getElementById("dropdown").style.opacity = 0;
+  }
+}
+
+// function htmlBack() {
+//   // if (
+//   //   document.querySelector(".custom-options").innerHTML !==
+//   //   myInner.currentTarget.myParam
+//   // ) {
+//   //   document.querySelector(".custom-options").innerHTML +=
+//   //     myInner.currentTarget.myParam;
+//   // }
+// }
 
 async function init() {
   console.log(recipes);
@@ -166,6 +218,7 @@ async function init() {
 
   document.getElementById("searchInput").addEventListener("input", searchPlat);
   document.getElementById("searchInput").myParam = "full";
+  myIngs = document.querySelector(".custom-options").innerHTML;
 }
 
 init();
