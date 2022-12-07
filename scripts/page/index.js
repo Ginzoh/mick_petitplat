@@ -1,6 +1,10 @@
 let result = recipes;
 let mytags = [];
 let myIngs;
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 function searchPlat(para, tag) {
   const platInput = document.getElementById("searchInput");
   const mesRec = document.querySelector(".mes-recettes");
@@ -12,6 +16,7 @@ function searchPlat(para, tag) {
     }
     return;
   }
+  console.log(para);
   if (para === "ing") {
     result = trierPlats(tag.toUpperCase(), para);
     console.log(result);
@@ -69,8 +74,8 @@ function testIng(ingredients, plat) {
   //     return true;
   //   }
   // });
-  const found = ingredients.find(
-    (ing) => ing.ingredient.toUpperCase().search(plat) !== -1
+  const found = ingredients.find((ing) =>
+    ing.ingredient.toUpperCase().includes(plat)
   );
   return found !== undefined;
 }
@@ -123,7 +128,20 @@ async function displayData(recettes) {
     recettesSection.appendChild(recettes);
   });
   myIngs = document.querySelector(".custom-options").innerHTML;
-  for (const option of document.querySelectorAll(".custom-option")) {
+  applyIng("n");
+  const ingInput = document.querySelector(".select input");
+  ingInput.removeEventListener("input", dropdownIng);
+  ingInput.addEventListener("input", dropdownIng);
+  ingInput.myParam = ingredientsArray;
+}
+function applyIng(n) {
+  let options;
+  if (n === "n") {
+    options = document.querySelectorAll(".custom-option");
+  } else if (n === "pika") {
+    options = document.querySelectorAll(".drop-option");
+  }
+  for (const option of options) {
     option.addEventListener("click", function () {
       let li = document.createElement("li");
       let inputValue = this.dataset.value;
@@ -167,17 +185,13 @@ async function displayData(recettes) {
   for (const ing of document.querySelectorAll(".ing")) {
     ing.addEventListener("click", function () {
       let triValue = this.dataset.value;
-      searchPlat("ing", triValue);
+      console.log(mytags);
+      searchPlat("ing", triValue.trim());
       console.log(triValue);
     });
     ing.myParam = "ing";
   }
-  const ingInput = document.querySelector(".select input");
-  ingInput.removeEventListener("input", dropdownIng);
-  ingInput.addEventListener("input", dropdownIng);
-  ingInput.myParam = ingredientsArray;
 }
-
 function dropdownIng(ingArray) {
   const myInputIng = document.querySelector(".select input");
 
@@ -192,29 +206,37 @@ function dropdownIng(ingArray) {
       console.log("Testing " + myInputIng.value.toUpperCase() + " and " + ing);
       return ing.search(myInputIng.value.toUpperCase()) !== -1;
     });
-    console.log(newIng);
+    if (newIng.length !== 0) {
+      let ingredient_1;
+      let dropdown = document.getElementById("dropdown");
+      dropdown.innerHTML = "";
+      newIng.forEach((ing) => {
+        console.log(
+          "HEY I'M MR MEESSEEKS " + capitalizeFirstLetter(ing.toLowerCase())
+        );
+        let newIng = capitalizeFirstLetter(ing.toLowerCase());
+        ingredient_1 = document.createElement("LI");
+        ingredient_1.setAttribute("class", "custom-option ing drop-option");
+        ingredient_1.setAttribute("data-value", newIng.toUpperCase());
+
+        let ingredient_2 = document.createTextNode(newIng);
+        ingredient_1.appendChild(ingredient_2);
+        dropdown.appendChild(ingredient_1);
+      });
+      applyIng("pika");
+    }
   } else {
     document.getElementById("ingredients-list").style.opacity = 1;
     document.getElementById("dropdown").style.opacity = 0;
   }
 }
 
-// function htmlBack() {
-//   // if (
-//   //   document.querySelector(".custom-options").innerHTML !==
-//   //   myInner.currentTarget.myParam
-//   // ) {
-//   //   document.querySelector(".custom-options").innerHTML +=
-//   //     myInner.currentTarget.myParam;
-//   // }
-// }
-
 async function init() {
   console.log(recipes);
   displayData(recipes);
   my_select();
-  document.querySelector(".search").addEventListener("click", searchPlat);
-  document.querySelector(".search").myParam = "full";
+  // document.querySelector(".search").addEventListener("click", searchPlat);
+  // document.querySelector(".search").myParam = "full";
 
   document.getElementById("searchInput").addEventListener("input", searchPlat);
   document.getElementById("searchInput").myParam = "full";
