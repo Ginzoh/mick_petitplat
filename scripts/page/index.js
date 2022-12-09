@@ -54,7 +54,6 @@ function searchPlat(para, tag) {
 function trierPlats(plat, para) {
   let plats = [];
   if (para === "full") {
-    console.log("nani");
     // return recipes.filter(function (a) {
     //   return (
     //     a.description.toUpperCase().search(plat) !== -1 ||
@@ -68,6 +67,7 @@ function trierPlats(plat, para) {
         el.name.toUpperCase().includes(plat) ||
         testIng(el.ingredients, plat)
       ) {
+        // console.log("this one " + el);
         plats.push(el);
       }
     }
@@ -82,6 +82,7 @@ function trierPlats(plat, para) {
       }
     }
   }
+  console.log("You're testing " + plats);
   return plats;
 }
 function testIng(ingredients, plat) {
