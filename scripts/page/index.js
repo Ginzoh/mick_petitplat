@@ -54,14 +54,6 @@ function searchPlat(para, tag) {
 function trierPlats(plat, para) {
   let plats = [];
   if (para === "full") {
-    // return recipes.filter(function (a) {
-    //   return (
-    //     a.description.toUpperCase().search(plat) !== -1 ||
-    //     a.name.toUpperCase().search(plat) !== -1 ||
-    //     testIng(a.ingredients, plat)
-    //   );
-    // });
-    // console.log("WTFFFF " + recipes);
     for (const a of recipes) {
       if (
         a.description.toUpperCase().includes(plat) ||
@@ -76,9 +68,6 @@ function trierPlats(plat, para) {
   }
 
   if (para === "ing") {
-    // return result.filter(function (a) {
-    //   return testIng(a.ingredients, plat);
-    // });
     for (const a of result) {
       if (testIng(a.ingredients, plat)) {
         plats.push(a);
@@ -89,15 +78,6 @@ function trierPlats(plat, para) {
   console.log("You're testing " + plats);
 }
 function testIng(ingredients, plat) {
-  // ingredients.forEach((food) => {
-  //   if (food.ingredient.toUpperCase().search(plat) !== -1) {
-  //     console.log("coco pog");
-  //     return true;
-  //   }
-  // });
-  // let found = ingredients.find((ing) =>
-  //   ing.ingredient.toUpperCase().includes(plat)
-  // );
   let res = false;
   for (const ing of ingredients) {
     if (ing.ingredient.toUpperCase().includes(plat)) {
@@ -105,7 +85,6 @@ function testIng(ingredients, plat) {
     }
   }
   return res;
-  // return found !== undefined;
 }
 
 function my_select() {
