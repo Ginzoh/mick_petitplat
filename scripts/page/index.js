@@ -61,14 +61,15 @@ function trierPlats(plat, para) {
     //     testIng(a.ingredients, plat)
     //   );
     // });
-    for (const el of recipes) {
+    console.log("WTFFFF " + recipes);
+    for (const a of recipes) {
       if (
-        el.description.toUpperCase().includes(plat) ||
-        el.name.toUpperCase().includes(plat) ||
-        testIng(el.ingredients, plat)
+        a.description.toUpperCase().includes(plat) ||
+        a.name.toUpperCase().includes(plat) ||
+        testIng(a.ingredients, plat)
       ) {
-        // console.log("this one " + el);
-        plats.push(el);
+        console.log("this one " + a);
+        plats.push(a);
       }
     }
   }
