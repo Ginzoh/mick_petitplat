@@ -52,6 +52,7 @@ function searchPlat(para, tag) {
 }
 
 function trierPlats(plat, para) {
+  console.log(recipes);
   if (para === "full") {
     return recipes.filter(function (a) {
       return (
