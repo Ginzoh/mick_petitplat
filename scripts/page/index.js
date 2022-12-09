@@ -51,7 +51,6 @@ function searchPlat(para, tag) {
   }
 }
 
-<<<<<<< HEAD
 function trierPlats(plat, para) {
   let plats = [];
   if (para === "full") {
@@ -81,23 +80,11 @@ function trierPlats(plat, para) {
       if (testIng(a.ingredients, plat)) {
         plats.push(a);
       }
-=======
-function trierPlats(plat) {
-  let plats = [];
-  for (const el of recipes) {
-    if (
-      el.description.toUpperCase().search(plat) !== -1 ||
-      el.name.toUpperCase().search(plat) !== -1 ||
-      testIng(el.ingredients, plat)
-    ) {
-      plats.push(el);
->>>>>>> 8dc4b4801d57c407810d9d874bfc468425fcb4a5
     }
   }
   return plats;
 }
 function testIng(ingredients, plat) {
-<<<<<<< HEAD
   // ingredients.forEach((food) => {
   //   if (food.ingredient.toUpperCase().search(plat) !== -1) {
   //     console.log("coco pog");
@@ -114,12 +101,6 @@ function testIng(ingredients, plat) {
     }
   }
   return found !== undefined;
-=======
-  for (const food of ingredients) {
-    if (food.ingredient.toUpperCase().search(plat) !== -1) return true;
-  }
-  return false;
->>>>>>> 8dc4b4801d57c407810d9d874bfc468425fcb4a5
 }
 
 function my_select() {
