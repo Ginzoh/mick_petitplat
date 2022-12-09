@@ -17,25 +17,25 @@ function searchPlat(para, tag) {
     return;
   }
   console.log(para);
-  if (para === "ing") {
-    result = trierPlats(tag.toUpperCase(), para);
-    console.log(result);
-  } else if (para === "app") {
-    console.log("app");
-  } else if (para === "ust") {
-    console.log("ust");
-  } else if (para === "full" || para.currentTarget.myParam === "full") {
-    if (para == "full") {
+  switch (para) {
+    case "ing":
+      result = trierPlats(tag.toUpperCase(), para);
+      console.log(result);
+      break;
+    case "app":
+      break;
+    case "ust":
+      break;
+    case "full":
       result = trierPlats(platInput.value.toUpperCase(), para);
-    } else {
+      break;
+    default:
       result = trierPlats(
         platInput.value.toUpperCase(),
         para.currentTarget.myParam
       );
-    }
-  } else {
-    console.log("There was a mistake in the search tag");
   }
+
   mesRec.innerHTML = "";
   document.getElementById("ingredients-list").innerHTML = "";
   document.getElementById("appareils").innerHTML = "";
