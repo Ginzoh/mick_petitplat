@@ -30,10 +30,6 @@ function searchPlat(para, tag) {
       result = trierPlats(platInput.value.toUpperCase(), para);
       break;
     default:
-      console.log(
-        recipes + platInput.value.toUpperCase(),
-        para.currentTarget.myParam
-      );
       result = trierPlats(
         platInput.value.toUpperCase(),
         para.currentTarget.myParam
@@ -65,18 +61,20 @@ function trierPlats(plat, para) {
     //     testIng(a.ingredients, plat)
     //   );
     // });
-    console.log("WTFFFF " + recipes);
+    // console.log("WTFFFF " + recipes);
     for (const a of recipes) {
       if (
         a.description.toUpperCase().includes(plat) ||
         a.name.toUpperCase().includes(plat) ||
         testIng(a.ingredients, plat)
       ) {
-        console.log("this one " + a);
+        // console.log("this one " + a);
         plats.push(a);
       }
     }
+    return plats;
   }
+
   if (para === "ing") {
     // return result.filter(function (a) {
     //   return testIng(a.ingredients, plat);
@@ -86,9 +84,9 @@ function trierPlats(plat, para) {
         plats.push(a);
       }
     }
+    return plats;
   }
   console.log("You're testing " + plats);
-  return plats;
 }
 function testIng(ingredients, plat) {
   // ingredients.forEach((food) => {
@@ -97,16 +95,17 @@ function testIng(ingredients, plat) {
   //     return true;
   //   }
   // });
-  let found = [];
-  // = ingredients.find((ing) =>
+  // let found = ingredients.find((ing) =>
   //   ing.ingredient.toUpperCase().includes(plat)
   // );
+  let res = false;
   for (const ing of ingredients) {
     if (ing.ingredient.toUpperCase().includes(plat)) {
-      found.push(ing);
+      res = true;
     }
   }
-  return found !== undefined;
+  return res;
+  // return found !== undefined;
 }
 
 function my_select() {
