@@ -30,6 +30,10 @@ function searchPlat(para, tag) {
       result = trierPlats(platInput.value.toUpperCase(), para);
       break;
     default:
+      console.log(
+        recipes + platInput.value.toUpperCase(),
+        para.currentTarget.myParam
+      );
       result = trierPlats(
         platInput.value.toUpperCase(),
         para.currentTarget.myParam
