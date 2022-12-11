@@ -56,8 +56,8 @@ function trierPlats(plat, para) {
   if (para === "full") {
     return recipes.filter(function (a) {
       return (
-        a.description.toUpperCase().search(plat) !== -1 ||
-        a.name.toUpperCase().search(plat) !== -1 ||
+        a.description.toUpperCase().includes(plat) ||
+        a.name.toUpperCase().includes(plat) ||
         testIng(a.ingredients, plat)
       );
     });
