@@ -53,19 +53,21 @@ function searchPlat(para, tag) {
 
 function trierPlats(plat, para) {
   console.log(recipes);
-  if (para === "full") {
-    return recipes.filter(function (a) {
-      return (
-        a.description.toUpperCase().includes(plat) ||
-        a.name.toUpperCase().includes(plat) ||
-        testIng(a.ingredients, plat)
-      );
-    });
-  }
-  if (para === "ing") {
-    return result.filter(function (a) {
-      return testIng(a.ingredients, plat);
-    });
+  switch (para) {
+    case "full":
+      return recipes.filter(function (a) {
+        return (
+          a.description.toUpperCase().includes(plat) ||
+          a.name.toUpperCase().includes(plat) ||
+          testIng(a.ingredients, plat)
+        );
+      });
+    case "ing":
+      return result.filter(function (a) {
+        return testIng(a.ingredients, plat);
+      });
+    default:
+      console.log("Erreur de tri");
   }
 }
 function testIng(ingredients, plat) {
