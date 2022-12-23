@@ -47,13 +47,21 @@
               </ol>
             </div>
           </div>
-          <div class="select-wrapper">
+          <div class="select-wrapper" id="appsWrap">
             <div class="select">
-              <div class="select__trigger appareils">
+              <input
+                type="text"
+                placeholder="Rechercher un appareil"
+                id="appInput"
+              />
+              <button class="select__trigger appareils" id="appareilsButton">
                 <span>Appareils</span>
                 <div class="arrow"></div>
-              </div>
-              <ol class="custom-options appareils" id="appareils"></ol>
+              </button>
+              <ol class="custom-options appareils" id="appareils-list"></ol>
+              <ol class="custom-options" id="dropdownApps">
+                <!-- <li class="custom-option" data-value="Ing1">Ing1</li> -->
+              </ol>
             </div>
           </div>
           <div class="select-wrapper">

@@ -23,6 +23,7 @@ function searchPlat(para, tag) {
       console.log(result);
       break;
     case "app":
+      result = trierPlats(tag.toUpperCase(), para);
       break;
     case "ust":
       break;
@@ -38,7 +39,7 @@ function searchPlat(para, tag) {
 
   mesRec.innerHTML = "";
   document.getElementById("ingredients-list").innerHTML = "";
-  document.getElementById("appareils").innerHTML = "";
+  document.getElementById("appareils-list").innerHTML = "";
   document.getElementById("ustensiles").innerHTML = "";
   displayData(result);
   if (mesRec.innerHTML === "") {
@@ -66,6 +67,10 @@ function trierPlats(plat, para) {
       return result.filter(function (a) {
         return testIng(a.ingredients, plat);
       });
+    case "app":
+      return result.filter(function (a) {
+        return a.appliance.toUpperCase().includes(plat);
+      });
     default:
       console.log("Erreur de tri");
   }
@@ -91,10 +96,10 @@ function my_select() {
     });
   }
 
-  for (const button of document.querySelectorAll(".select button")) {
+  for (const button of document.querySelectorAll(".select #ingredients")) {
     button.addEventListener("click", function () {
       this.style.display = "none";
-      const myInput = document.querySelector(".select input");
+      const myInput = document.querySelector(".select #ingInput");
       myInput.style.display = "block";
       document.getElementById("ingredientsWrap").style.width = "667px";
       myInput.focus();
@@ -102,6 +107,20 @@ function my_select() {
         this.style.display = "none";
         button.style.display = "block";
         document.getElementById("ingredientsWrap").style.width = "170px";
+      });
+    });
+  }
+  for (const button of document.querySelectorAll(".select #appareilsButton")) {
+    button.addEventListener("click", function () {
+      this.style.display = "none";
+      const myInput = document.querySelector(".select #appInput");
+      myInput.style.display = "block";
+      document.getElementById("appsWrap").style.width = "667px";
+      myInput.focus();
+      myInput.addEventListener("focusout", function () {
+        this.style.display = "none";
+        button.style.display = "block";
+        document.getElementById("appsWrap").style.width = "170px";
       });
     });
   }
@@ -120,7 +139,7 @@ async function displayData(recettes) {
   let ustensilsArray = [];
   const recettesSection = document.querySelector(".mes-recettes");
   const mesIngredients = document.getElementById("ingredients-list");
-  const mesAppareils = document.getElementById("appareils");
+  const mesAppareils = document.getElementById("appareils-list");
   const mesUstensiles = document.getElementById("ustensiles");
   recettes.forEach((recette) => {
     const recetteModel = recetteFactory(recette);
@@ -132,10 +151,14 @@ async function displayData(recettes) {
   });
   myIngs = document.querySelector(".custom-options").innerHTML;
   applyIng("n");
-  const ingInput = document.querySelector(".select input");
+  const ingInput = document.querySelector(".select #ingInput");
   ingInput.removeEventListener("input", dropdownIng);
   ingInput.addEventListener("input", dropdownIng);
   ingInput.myParam = ingredientsArray;
+  const appInput = document.querySelector(".select #appInput");
+  appInput.removeEventListener("input", dropdownApp);
+  appInput.addEventListener("input", dropdownApp);
+  appInput.myParam = applianceArray;
 }
 function applyIng(n) {
   let options;
@@ -143,6 +166,8 @@ function applyIng(n) {
     options = document.querySelectorAll(".custom-option");
   } else if (n === "pika") {
     options = document.querySelectorAll(".drop-option");
+  } else if (n === "app") {
+    options = document.querySelectorAll(".drop-option-app");
   }
   for (const option of options) {
     option.addEventListener("click", function () {
@@ -179,21 +204,34 @@ function applyIng(n) {
           document.querySelector("#searchInput").dataset.value
         );
         if (mytags.length !== 0) {
-          mytags.forEach((tag) => searchPlat("ing", tag));
+          if (n === "app") {
+            mytags.forEach((tag) => searchPlat("app", tag));
+          } else {
+            mytags.forEach((tag) => searchPlat("ing", tag));
+          }
         }
       };
       // }
     });
   }
+
   for (const ing of document.querySelectorAll(".ing")) {
-    ing.addEventListener("click", function () {
-      let triValue = this.dataset.value;
-      console.log(mytags);
-      searchPlat("ing", triValue.trim());
-      console.log(triValue);
-    });
+    ing.addEventListener("click", searchIng);
     ing.myParam = "ing";
   }
+  for (const app of document.querySelectorAll(".app")) {
+    app.addEventListener("click", function () {
+      let triValue = this.dataset.value;
+      console.log(mytags);
+      searchPlat("app", triValue.trim());
+      console.log(triValue);
+    });
+    app.myParam = "app";
+  }
+}
+function searchIng() {
+  let triValue = this.dataset.value;
+  searchPlat("ing", triValue.trim());
 }
 function dropdownIng(ingArray) {
   const myInputIng = document.querySelector(".select input");
@@ -231,6 +269,45 @@ function dropdownIng(ingArray) {
   } else {
     document.getElementById("ingredients-list").style.opacity = 1;
     document.getElementById("dropdown").style.opacity = 0;
+  }
+}
+
+function dropdownApp(appArray) {
+  const myInputApp = document.querySelector(".select #appInput");
+
+  // myInputIng.removeEventListener("focusout", htmlBack);
+  // myInputIng.addEventListener("focusout", htmlBack);
+  if (this.value.length !== 0) {
+    document.getElementById("appareils-list").style.opacity = 0;
+    document.getElementById("dropdownApps").style.opacity = 1;
+    console.log(appArray.currentTarget.myParam);
+    console.log(myInputApp.value);
+    let newIng = appArray.currentTarget.myParam.filter((app) => {
+      // console.log("Testing " + myInputApp.value.toUpperCase() + " and " + ing);
+      return app.search(myInputApp.value.toUpperCase()) !== -1;
+    });
+    if (newIng.length !== 0) {
+      let ingredient_1;
+      let dropdown = document.getElementById("dropdownApps");
+      dropdown.innerHTML = "";
+      newIng.forEach((ing) => {
+        console.log(
+          "HEY I'M MR MEESSEEKS " + capitalizeFirstLetter(ing.toLowerCase())
+        );
+        let newIng = capitalizeFirstLetter(ing.toLowerCase());
+        ingredient_1 = document.createElement("LI");
+        ingredient_1.setAttribute("class", "custom-option app drop-option-app");
+        ingredient_1.setAttribute("data-value", newIng.toUpperCase());
+
+        let ingredient_2 = document.createTextNode(newIng);
+        ingredient_1.appendChild(ingredient_2);
+        dropdown.appendChild(ingredient_1);
+      });
+      applyIng("app");
+    }
+  } else {
+    document.getElementById("appareils-list").style.opacity = 1;
+    document.getElementById("dropdownApps").style.opacity = 0;
   }
 }
 

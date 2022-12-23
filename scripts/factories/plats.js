@@ -113,7 +113,7 @@ function recetteFactory(data) {
       if (applianceArray.indexOf(appliance.toUpperCase()) === -1) {
         applianceArray.push(appliance.toUpperCase());
         let appareil_1 = document.createElement("LI");
-        appareil_1.setAttribute("class", "custom-option");
+        appareil_1.setAttribute("class", "custom-option app");
         appareil_1.setAttribute("data-value", appliance.toUpperCase());
 
         let appareil_2 = document.createTextNode(appliance);
