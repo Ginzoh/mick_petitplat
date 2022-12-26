@@ -193,7 +193,9 @@ function applyIng(n) {
     option.addEventListener("click", function () {
       let li = document.createElement("li");
       let inputValue = this.dataset.value;
-      let t = document.createTextNode(inputValue);
+      let t = document.createTextNode(
+        capitalizeFirstLetter(inputValue.toLowerCase())
+      );
       li.appendChild(t);
       if (inputValue === "") {
         alert("You must write something!");
