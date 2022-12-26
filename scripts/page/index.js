@@ -26,6 +26,7 @@ function searchPlat(para, tag) {
       result = trierPlats(tag.toUpperCase(), para);
       break;
     case "ust":
+      result = trierPlats(tag.toUpperCase(), para);
       break;
     case "full":
       result = trierPlats(platInput.value.toUpperCase(), para);
@@ -71,17 +72,16 @@ function trierPlats(plat, para) {
       return result.filter(function (a) {
         return a.appliance.toUpperCase().includes(plat);
       });
+    case "ust":
+      return result.filter(function (a) {
+        const found = a.ustensils.find((ul) => ul.toUpperCase().includes(plat));
+        return found !== undefined;
+      });
     default:
       console.log("Erreur de tri");
   }
 }
 function testIng(ingredients, plat) {
-  // ingredients.forEach((food) => {
-  //   if (food.ingredient.toUpperCase().search(plat) !== -1) {
-  //     console.log("coco pog");
-  //     return true;
-  //   }
-  // });
   const found = ingredients.find((ing) =>
     ing.ingredient.toUpperCase().includes(plat)
   );
@@ -124,6 +124,20 @@ function my_select() {
       });
     });
   }
+  for (const button of document.querySelectorAll(".select #ustensilesButton")) {
+    button.addEventListener("click", function () {
+      this.style.display = "none";
+      const myInput = document.querySelector(".select #ustInput");
+      myInput.style.display = "block";
+      document.getElementById("ustWrap").style.width = "667px";
+      myInput.focus();
+      myInput.addEventListener("focusout", function () {
+        this.style.display = "none";
+        button.style.display = "block";
+        document.getElementById("ustWrap").style.width = "170px";
+      });
+    });
+  }
 }
 window.addEventListener("click", function (e) {
   for (const select of document.querySelectorAll(".select")) {
@@ -159,6 +173,10 @@ async function displayData(recettes) {
   appInput.removeEventListener("input", dropdownApp);
   appInput.addEventListener("input", dropdownApp);
   appInput.myParam = applianceArray;
+  const ustInput = document.querySelector(".select #ustInput");
+  ustInput.removeEventListener("input", dropdownUst);
+  ustInput.addEventListener("input", dropdownUst);
+  ustInput.myParam = ustensilsArray;
 }
 function applyIng(n) {
   let options;
@@ -168,6 +186,8 @@ function applyIng(n) {
     options = document.querySelectorAll(".drop-option");
   } else if (n === "app") {
     options = document.querySelectorAll(".drop-option-app");
+  } else if (n === "ust") {
+    options = document.querySelectorAll(".drop-option-ust");
   }
   for (const option of options) {
     option.addEventListener("click", function () {
@@ -206,6 +226,8 @@ function applyIng(n) {
         if (mytags.length !== 0) {
           if (n === "app") {
             mytags.forEach((tag) => searchPlat("app", tag));
+          } else if (n === "ust") {
+            mytags.forEach((tag) => searchPlat("ust", tag));
           } else {
             mytags.forEach((tag) => searchPlat("ing", tag));
           }
@@ -227,6 +249,15 @@ function applyIng(n) {
       console.log(triValue);
     });
     app.myParam = "app";
+  }
+  for (const ust of document.querySelectorAll(".ust")) {
+    ust.addEventListener("click", function () {
+      let triValue = this.dataset.value;
+      console.log(mytags);
+      searchPlat("ust", triValue.trim());
+      console.log(triValue);
+    });
+    ust.myParam = "ust";
   }
 }
 function searchIng() {
@@ -308,6 +339,48 @@ function dropdownApp(appArray) {
   } else {
     document.getElementById("appareils-list").style.opacity = 1;
     document.getElementById("dropdownApps").style.opacity = 0;
+  }
+}
+
+function dropdownUst(ustArray) {
+  const myInputApp = document.querySelector(".select #ustInput");
+
+  // myInputIng.removeEventListener("focusout", htmlBack);
+  // myInputIng.addEventListener("focusout", htmlBack);
+  if (this.value.length !== 0) {
+    document.getElementById("ustensiles").style.opacity = 0;
+    document.getElementById("dropdownUsts").style.opacity = 1;
+    console.log(ustArray.currentTarget.myParam);
+    console.log(myInputApp.value);
+    let newIng = ustArray.currentTarget.myParam.filter((ust) => {
+      // console.log("Testing " + myInputApp.value.toUpperCase() + " and " + ing);
+      console.log(
+        "checking " + ust + " with " + myInputApp.value.toUpperCase()
+      );
+      return ust.includes(myInputApp.value.toUpperCase());
+    });
+    if (newIng.length !== 0) {
+      let ingredient_1;
+      let dropdown = document.getElementById("dropdownUsts");
+      dropdown.innerHTML = "";
+      newIng.forEach((ing) => {
+        console.log(
+          "HEY I'M MR MEESSEEKS " + capitalizeFirstLetter(ing.toLowerCase())
+        );
+        let newIng = capitalizeFirstLetter(ing.toLowerCase());
+        ingredient_1 = document.createElement("LI");
+        ingredient_1.setAttribute("class", "custom-option ust drop-option-ust");
+        ingredient_1.setAttribute("data-value", newIng.toUpperCase());
+
+        let ingredient_2 = document.createTextNode(newIng);
+        ingredient_1.appendChild(ingredient_2);
+        dropdown.appendChild(ingredient_1);
+      });
+      applyIng("ust");
+    }
+  } else {
+    document.getElementById("ustensiles").style.opacity = 1;
+    document.getElementById("dropdownUsts").style.opacity = 0;
   }
 }
 

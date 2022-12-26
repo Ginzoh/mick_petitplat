@@ -64,13 +64,19 @@
               </ol>
             </div>
           </div>
-          <div class="select-wrapper">
+          <div class="select-wrapper" id="ustWrap">
             <div class="select">
-              <div class="select__trigger ustensiles">
+              <input
+                type="text"
+                placeholder="Rechercher un ustensile"
+                id="ustInput"
+              />
+              <button class="select__trigger ustensiles" id="ustensilesButton">
                 <span>Ustensiles</span>
                 <div class="arrow"></div>
-              </div>
+              </button>
               <ol class="custom-options ustensiles" id="ustensiles"></ol>
+              <ol class="custom-options" id="dropdownUsts"></ol>
             </div>
           </div>
         </nav>

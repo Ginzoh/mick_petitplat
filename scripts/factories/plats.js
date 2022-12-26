@@ -127,7 +127,7 @@ function recetteFactory(data) {
       if (ustensilsArray.indexOf(ust.toUpperCase()) === -1) {
         ustensilsArray.push(ust.toUpperCase());
         let ustensil_1 = document.createElement("LI");
-        ustensil_1.setAttribute("class", "custom-option");
+        ustensil_1.setAttribute("class", "custom-option ust");
         ustensil_1.setAttribute("data-value", ust.toUpperCase());
 
         let ustensil_2 = document.createTextNode(ust);
