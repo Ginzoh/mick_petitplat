@@ -210,8 +210,6 @@ function applyIng(n) {
       span.className = `close`;
       span.appendChild(txt);
       li.appendChild(span);
-      // let close = document.getElementsByClassName("close");
-      // for (let c of close) {
       span.onclick = function () {
         const index = mytags.indexOf(inputValue.toUpperCase());
         console.log("Tell me " + mytags + "my tag" + inputValue.toUpperCase());
@@ -235,7 +233,6 @@ function applyIng(n) {
           }
         }
       };
-      // }
     });
   }
 
@@ -308,8 +305,6 @@ function dropdownIng(ingArray) {
 function dropdownApp(appArray) {
   const myInputApp = document.querySelector(".select #appInput");
 
-  // myInputIng.removeEventListener("focusout", htmlBack);
-  // myInputIng.addEventListener("focusout", htmlBack);
   if (this.value.length !== 0) {
     document.getElementById("appareils-list").style.opacity = 0;
     document.getElementById("dropdownApps").style.opacity = 1;
