@@ -191,14 +191,16 @@ function applyIng(n) {
     });
   }
   for (const ing of document.querySelectorAll(".ing")) {
-    ing.addEventListener("click", function () {
-      let triValue = this.dataset.value;
-      console.log(mytags);
-      searchPlat("ing", triValue.trim());
-      console.log(triValue);
-    });
+    ing.removeEventListener("click", applyTag);
+    ing.addEventListener("click", applyTag);
     ing.myParam = "ing";
   }
+}
+function applyTag(tag) {
+  let triValue = this.dataset.value;
+  console.log(mytags);
+  searchPlat(tag.currentTarget.myParam, triValue.trim());
+  console.log(triValue);
 }
 function dropdownIng(ingArray) {
   const myInputIng = document.querySelector(".select input");
