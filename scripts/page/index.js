@@ -84,6 +84,7 @@ function testIng(ingredients, plat) {
   for (const ing of ingredients) {
     if (ing.ingredient.toUpperCase().includes(plat)) {
       res = true;
+      return res;
     }
   }
   return res;
