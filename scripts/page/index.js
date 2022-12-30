@@ -1,6 +1,7 @@
 let result = recipes;
 let mytags = [];
 let myIngs;
+let searching = 1;
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -9,11 +10,12 @@ function searchPlat(para, tag) {
   const platInput = document.getElementById("searchInput");
   const mesRec = document.querySelector(".mes-recettes");
   console.log(platInput.value);
-  if (platInput.value.length < 3) {
+  if (platInput.value.length < 3 && searching) {
     if (mesRec.children.length < 50) {
       mesRec.innerHTML = "";
       displayData(recipes);
     }
+    console.log("wtf");
     return;
   }
   console.log(para);
@@ -150,51 +152,54 @@ function applyIng(n) {
     options = document.querySelectorAll(".drop-option");
   }
   for (const option of options) {
-    option.addEventListener("click", function () {
-      let li = document.createElement("li");
-      let inputValue = this.dataset.value;
-      let t = document.createTextNode(inputValue);
-      li.appendChild(t);
-      if (inputValue === "") {
-        alert("You must write something!");
-      } else {
-        document.getElementById("tags").appendChild(li);
-        if (mytags.indexOf(inputValue.toUpperCase()) === -1)
-          mytags.push(inputValue.toUpperCase());
-      }
-
-      let span = document.createElement("SPAN");
-      let txt = document.createTextNode("\u00D7");
-      span.className = `close`;
-      span.appendChild(txt);
-      li.appendChild(span);
-      // let close = document.getElementsByClassName("close");
-      // for (let c of close) {
-      span.onclick = function () {
-        const index = mytags.indexOf(inputValue.toUpperCase());
-        console.log("Tell me " + mytags + "my tag" + inputValue.toUpperCase());
-        if (index > -1) {
-          console.log("REMOVE HERE");
-          mytags.splice(index, 1);
-        }
-        let div = this.parentElement;
-        div.style.display = "none";
-        searchPlat(
-          "full",
-          document.querySelector("#searchInput").dataset.value
-        );
-        if (mytags.length !== 0) {
-          mytags.forEach((tag) => searchPlat("ing", tag));
-        }
-      };
-      // }
-    });
+    option.removeEventListener("click", idk);
+    option.addEventListener("click", idk);
+    // }
   }
   for (const ing of document.querySelectorAll(".ing")) {
     ing.removeEventListener("click", applyTag);
     ing.addEventListener("click", applyTag);
     ing.myParam = "ing";
   }
+}
+
+function idk() {
+  searching = 0;
+  let li = document.createElement("li");
+  let inputValue = this.dataset.value;
+  let t = document.createTextNode(inputValue);
+  li.appendChild(t);
+  if (inputValue === "") {
+    alert("You must write something!");
+  } else {
+    document.getElementById("tags").appendChild(li);
+    if (mytags.indexOf(inputValue.toUpperCase()) === -1)
+      mytags.push(inputValue.toUpperCase());
+  }
+
+  let span = document.createElement("SPAN");
+  let txt = document.createTextNode("\u00D7");
+  span.className = `close`;
+  span.appendChild(txt);
+  li.appendChild(span);
+  // let close = document.getElementsByClassName("close");
+  // for (let c of close) {
+  span.onclick = function () {
+    const index = mytags.indexOf(inputValue.toUpperCase());
+    console.log("Tell me " + mytags + "my tag" + inputValue.toUpperCase());
+    if (index > -1) {
+      console.log("REMOVE HERE");
+      mytags.splice(index, 1);
+    }
+    let div = this.parentElement;
+    div.style.display = "none";
+    searchPlat("full", document.querySelector("#searchInput").dataset.value);
+    if (mytags.length !== 0) {
+      mytags.forEach((tag) => searchPlat("ing", tag));
+    } else {
+      searching = 1;
+    }
+  };
 }
 function applyTag(tag) {
   let triValue = this.dataset.value;
