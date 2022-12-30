@@ -36,22 +36,6 @@ function searchPlat(para, tag) {
       break;
     default:
       if (!searching) {
-        // let e = window.event;
-
-        // let sender;
-        // if (e.target) {
-        //   sender = e.target;
-        // } else {
-        //   if (e.srcElement) {
-        //     sender = e.srcElement;
-        //   }
-        // }
-        // console.log(sender.parentNode.parentNode.getElementsByTagName("li"));
-        // let test = sender.parentNode.parentNode.getElementsByTagName("li");
-        // for (let i = 0, len = test.length; i < len; i++) {
-        //   console.log(test[i].innerHTML);
-        // }
-        console.log("HELLOOOOOOOOOOOOOOOOOOOOOOOOOO");
         result = recipes;
         result = trierPlats(platInput.value.toUpperCase(), "full2");
         console.log(mytags);
