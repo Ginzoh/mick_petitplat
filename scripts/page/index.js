@@ -1,25 +1,23 @@
 let result = recipes;
 let mytags = [];
 let myIngs;
+let searching = 1;
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function searchPlat(para, tag, test = 1) {
+function searchPlat(para, tag) {
   const platInput = document.getElementById("searchInput");
   const mesRec = document.querySelector(".mes-recettes");
-  const tags = document.getElementById("tags");
   console.log(platInput.value);
 
-  if (platInput.value.length < 3 && test) {
-    if (tags.children.length > 0) {
-      console.log("TELL ME");
-      return;
-    }
+  if (platInput.value.length < 3 && searching) {
     if (mesRec.children.length < 50) {
       mesRec.innerHTML = "";
       displayData(recipes);
     }
+    console.log("wtf");
+    return;
   }
   console.log(para);
   switch (para) {
@@ -37,10 +35,32 @@ function searchPlat(para, tag, test = 1) {
       result = trierPlats(platInput.value.toUpperCase(), para);
       break;
     default:
-      result = trierPlats(
-        platInput.value.toUpperCase(),
-        para.currentTarget.myParam
-      );
+      if (!searching) {
+        // let e = window.event;
+
+        // let sender;
+        // if (e.target) {
+        //   sender = e.target;
+        // } else {
+        //   if (e.srcElement) {
+        //     sender = e.srcElement;
+        //   }
+        // }
+        // console.log(sender.parentNode.parentNode.getElementsByTagName("li"));
+        // let test = sender.parentNode.parentNode.getElementsByTagName("li");
+        // for (let i = 0, len = test.length; i < len; i++) {
+        //   console.log(test[i].innerHTML);
+        // }
+        result = recipes;
+        mytags.forEach((tag) => searchPlat("ing", tag));
+        result = trierPlats(platInput.value.toUpperCase(), "full2");
+        console.log("Right here");
+      } else {
+        result = trierPlats(
+          platInput.value.toUpperCase(),
+          para.currentTarget.myParam
+        );
+      }
   }
 
   mesRec.innerHTML = "";
@@ -52,12 +72,12 @@ function searchPlat(para, tag, test = 1) {
     let message_1 = document.createElement("P");
     message_1.setAttribute("id", "notfound");
 
-    let message_2 = document.createTextNode("Aucune recette trouvée");
+    let message_2 =
+      document.createTextNode(`Aucune recette ne correspond à votre critère… vous pouvez
+    chercher « tarte aux pommes », « poisson », etc.`);
     message_1.appendChild(message_2);
     mesRec.appendChild(message_1);
   }
-  console.log("Hello" + { result });
-  return result;
 }
 
 function trierPlats(plat, para) {
@@ -71,19 +91,31 @@ function trierPlats(plat, para) {
           testIng(a.ingredients, plat)
         );
       });
+    case "full2":
+      return result.filter(function (a) {
+        return (
+          a.description.toUpperCase().includes(plat) ||
+          a.name.toUpperCase().includes(plat) ||
+          testIng(a.ingredients, plat)
+        );
+      });
+
     case "ing":
       return result.filter(function (a) {
         return testIng(a.ingredients, plat);
       });
+
     case "app":
       return result.filter(function (a) {
         return a.appliance.toUpperCase().includes(plat);
       });
+
     case "ust":
       return result.filter(function (a) {
         const found = a.ustensils.find((ul) => ul.toUpperCase().includes(plat));
         return found !== undefined;
       });
+
     default:
       console.log("Erreur de tri");
   }
@@ -202,42 +234,30 @@ function applyIng(n) {
   }
 
   for (const ing of document.querySelectorAll(".ing")) {
-    applySearch(ing, "ing");
-    if (n === "n") {
-      ing.removeEventListener("click", applyTag);
-      ing.addEventListener("click", applyTag);
-      ing.myParam = "ing";
-    }
+    ing.removeEventListener("click", searchTag);
+    ing.addEventListener("click", searchTag);
+    ing.myParam = "ing";
   }
   for (const app of document.querySelectorAll(".app")) {
-    applySearch(app, "app");
-    if (n === "n") {
-      app.removeEventListener("click", applyTag);
-      app.addEventListener("click", applyTag);
-      app.myParam = "app";
-    }
+    app.removeEventListener("click", searchTag);
+    app.addEventListener("click", searchTag);
+    app.myParam = "app";
   }
   for (const ust of document.querySelectorAll(".ust")) {
-    applySearch(ust, "ust");
-    if (n == "n") {
-      ust.removeEventListener("click", applyTag);
-      ust.addEventListener("click", applyTag);
-      ust.myParam = "ust";
-    }
+    ust.removeEventListener("click", searchTag);
+    ust.addEventListener("click", searchTag);
+    ust.myParam = "ust";
   }
 }
 
 function applyTag(n) {
-  // if (n.currentTarget.myParam !== "undefined") {
-  //   n = n.currentTarget.myParam;
-  // }
+  searching = 0;
   let li = document.createElement("li");
   let inputValue = this.dataset.value;
   let t = document.createTextNode(
     capitalizeFirstLetter(inputValue.toLowerCase())
   );
   li.appendChild(t);
-  console.log("OKKKKKKKKKKKK????????????");
   if (inputValue === "") {
     alert("You must write something!");
   } else {
@@ -252,8 +272,6 @@ function applyTag(n) {
   span.appendChild(txt);
   li.appendChild(span);
   span.onclick = function () {
-    console.log("wow");
-    console.log(result);
     const index = mytags.indexOf(inputValue.toUpperCase());
     console.log("Tell me " + mytags + "my tag" + inputValue.toUpperCase());
     if (index > -1) {
@@ -263,11 +281,10 @@ function applyTag(n) {
     // let div = this.parentElement;
     // div.style.display = "none";
     li.parentNode.removeChild(li);
-    const userInput = document.querySelector("#searchInput").value;
-    searchPlat("full", userInput);
-    console.log(mytags);
+    // const userInput = document.querySelector("#searchInput").value;
+    // searchPlat("full", userInput);
+    searchPlat("full", document.querySelector("#searchInput").dataset.value);
     if (mytags.length !== 0) {
-      console.log("So n is " + n);
       if (n === "app") {
         mytags.forEach((tag) => searchPlat("app", tag));
       } else if (n === "ust") {
@@ -276,13 +293,12 @@ function applyTag(n) {
         mytags.forEach((tag) => searchPlat("ing", tag));
       }
     } else {
-      console.log(userInput);
-      if (userInput === "") {
-        result = recipes;
-      }
+      // console.log(userInput);
+      // if (userInput === "") {
+      //   result = recipes;
+      // }
+      searching = 1;
     }
-    console.log("waw");
-    console.log(result);
   };
 }
 function applySearch(ele, tag) {
@@ -293,7 +309,7 @@ function applySearch(ele, tag) {
 function searchTag(tag) {
   console.log(this.dataset.value);
   let triValue = this.dataset.value;
-  searchPlat(tag.currentTarget.myParam, triValue.trim(), 0);
+  searchPlat(tag.currentTarget.myParam, triValue.trim());
 }
 function dropdownIng(ingArray) {
   const myInputIng = document.querySelector(".select input");
