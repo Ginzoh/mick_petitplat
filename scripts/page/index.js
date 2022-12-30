@@ -57,7 +57,9 @@ function searchPlat(para, tag) {
     let message_1 = document.createElement("P");
     message_1.setAttribute("id", "notfound");
 
-    let message_2 = document.createTextNode("Aucune recette trouvée");
+    let message_2 =
+      document.createTextNode(`Aucune recette ne correspond à votre critère… vous pouvez
+    chercher « tarte aux pommes », « poisson », etc.`);
     message_1.appendChild(message_2);
     mesRec.appendChild(message_1);
   }
