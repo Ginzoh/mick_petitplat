@@ -21,7 +21,6 @@ h1,
   font-family: "DM Sans", sans-serif;
   font-weight: 700;
   font-size: 36px;
-  font-weight: 700;
   line-height: 47px;
   letter-spacing: 0em;
   text-align: center;
@@ -347,10 +346,6 @@ ul li {
   right: 0;
   top: 0;
   padding: 8px 16px 12px 16px;
-}
-
-li .close {
-  background: url("./assets/close.png");
 }
 
 .close:hover {
