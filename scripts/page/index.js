@@ -73,7 +73,6 @@ function trierPlats(plat, para) {
     for (const a of result) {
       if (testIng(a.ingredients, plat)) {
         plats.push(a);
-        break;
       }
     }
     return plats;
