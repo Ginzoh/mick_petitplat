@@ -51,9 +51,20 @@ function searchPlat(para, tag) {
         // for (let i = 0, len = test.length; i < len; i++) {
         //   console.log(test[i].innerHTML);
         // }
+        console.log("HELLOOOOOOOOOOOOOOOOOOOOOOOOOO");
         result = recipes;
-        mytags.forEach((tag) => searchPlat("ing", tag));
         result = trierPlats(platInput.value.toUpperCase(), "full2");
+        console.log(mytags);
+        mytags.forEach((tag) => {
+          if (tag.tag === "app") {
+            result = trierPlats(tag.val, "app");
+          } else if (tag.tag === "ust") {
+            result = trierPlats(tag.val, "ust");
+          } else if (tag.tag === "ing") {
+            console.log("wow");
+            result = trierPlats(tag.val, "ing");
+          }
+        });
         console.log("Right here");
       } else {
         result = trierPlats(
@@ -262,8 +273,6 @@ function applyTag(n) {
     alert("You must write something!");
   } else {
     document.getElementById("tags").appendChild(li);
-    if (mytags.indexOf(inputValue.toUpperCase()) === -1)
-      mytags.push(inputValue.toUpperCase());
   }
 
   let span = document.createElement("SPAN");
@@ -272,7 +281,15 @@ function applyTag(n) {
   span.appendChild(txt);
   li.appendChild(span);
   span.onclick = function () {
-    const index = mytags.indexOf(inputValue.toUpperCase());
+    // const index = mytags.indexOf(inputValue.toUpperCase());
+    let i = 0;
+    let index = 0;
+    mytags.forEach((a) => {
+      if (a.val === inputValue.toUpperCase()) {
+        index = i;
+      }
+      i++;
+    });
     console.log("Tell me " + mytags + "my tag" + inputValue.toUpperCase());
     if (index > -1) {
       console.log("REMOVE HERE");
@@ -285,13 +302,15 @@ function applyTag(n) {
     // searchPlat("full", userInput);
     searchPlat("full", document.querySelector("#searchInput").dataset.value);
     if (mytags.length !== 0) {
-      if (n === "app") {
-        mytags.forEach((tag) => searchPlat("app", tag));
-      } else if (n === "ust") {
-        mytags.forEach((tag) => searchPlat("ust", tag));
-      } else {
-        mytags.forEach((tag) => searchPlat("ing", tag));
-      }
+      mytags.forEach((tag) => {
+        if (tag.tag === "app") {
+          searchPlat("app", tag.val);
+        } else if (tag.tag === "ust") {
+          searchPlat("ust", tag.val);
+        } else {
+          searchPlat("ing", tag.val);
+        }
+      });
     } else {
       // console.log(userInput);
       // if (userInput === "") {
@@ -308,6 +327,25 @@ function applySearch(ele, tag) {
 }
 function searchTag(tag) {
   console.log(this.dataset.value);
+  let inputValue = this.dataset.value;
+  if (mytags === []) {
+    let a = { tag: tag.currentTarget.myParam, val: inputValue.toUpperCase() };
+    mytags.push(a);
+  } else {
+    let found = false;
+    mytags.forEach((a) => {
+      if (
+        a.tag === tag.currentTarget.myParam &&
+        a.val === inputValue.toUpperCase()
+      ) {
+        found = true;
+      }
+    });
+    if (!found) {
+      let b = { tag: tag.currentTarget.myParam, val: inputValue.toUpperCase() };
+      mytags.push(b);
+    }
+  }
   let triValue = this.dataset.value;
   searchPlat(tag.currentTarget.myParam, triValue.trim());
 }
