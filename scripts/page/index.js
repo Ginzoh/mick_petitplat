@@ -18,6 +18,9 @@ function searchPlat(para, tag) {
     console.log("wtf");
     return;
   }
+  //  else if (platInput.value.length < 3 && !searching) {
+  //   return;
+  // }
   console.log(para);
   switch (para) {
     case "ing":
@@ -32,10 +35,17 @@ function searchPlat(para, tag) {
       result = trierPlats(platInput.value.toUpperCase(), para);
       break;
     default:
-      result = trierPlats(
-        platInput.value.toUpperCase(),
-        para.currentTarget.myParam
-      );
+      if (!searching) {
+        result = recipes;
+        mytags.forEach((tag) => searchPlat("ing", tag));
+        result = trierPlats(platInput.value.toUpperCase(), "full2");
+        console.log("Right here");
+      } else {
+        result = trierPlats(
+          platInput.value.toUpperCase(),
+          para.currentTarget.myParam
+        );
+      }
   }
 
   mesRec.innerHTML = "";
@@ -57,6 +67,19 @@ function trierPlats(plat, para) {
   let plats = [];
   if (para === "full") {
     for (const a of recipes) {
+      if (
+        a.description.toUpperCase().includes(plat) ||
+        a.name.toUpperCase().includes(plat) ||
+        testIng(a.ingredients, plat)
+      ) {
+        // console.log("this one " + a);
+        plats.push(a);
+      }
+    }
+    return plats;
+  }
+  if (para === "full2") {
+    for (const a of result) {
       if (
         a.description.toUpperCase().includes(plat) ||
         a.name.toUpperCase().includes(plat) ||
